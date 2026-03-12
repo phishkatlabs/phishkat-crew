@@ -1,0 +1,11 @@
+# Ignore .env files
+.env
+.env.*
+!.env.example
+
+# Ignore node_modules (if any JS scripts are added later)
+node_modules/
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
