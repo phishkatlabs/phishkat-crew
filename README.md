@@ -1,6 +1,6 @@
 # PhishKat Crew
 
-An open-source, autonomous AI development team composed of 13 specialized Claude skills. Give the crew a goal and walk away; they will autonomously research, design, build, test, secure, document, and ship your software.
+An open-source, autonomous AI development team composed of 16 specialized Claude skills. Give the crew a goal and walk away; they will autonomously research, design, build, test, secure, document, and ship your software.
 
 ## Philosophy
 
@@ -17,9 +17,22 @@ PhishKat Crew uses a **Hub-and-Spoke** architecture. The `project-lead` acts as 
 
 ## Installation
 
+### For Google Vertex AI / Antigravity CLI
 1. Clone this repository directly into your AI assistant's skills directory:
    ```bash
    git clone https://github.com/phishkatlabs/phishkat-crew.git ~/.gemini/antigravity/skills/phishkat-crew
+   ```
+2. Copy `.env.example` to `.env` and fill in your credentials.
+3. Complete the `project-context.example.md` (renaming to `project-context.md`) and place it in the root of your project directory.
+
+### For Claude Code / VSCode (Cline/RooCode)
+1. Clone this repository into your global or project `.agents` directory to give your AI access to the skills:
+   ```bash
+   # Global installation (recommended)
+   git clone https://github.com/phishkatlabs/phishkat-crew.git ~/.agents/phishkat-crew
+   
+   # Or project-specific installation
+   git clone https://github.com/phishkatlabs/phishkat-crew.git .agents/phishkat-crew
    ```
 2. Copy `.env.example` to `.env` and fill in your credentials.
 3. Complete the `project-context.example.md` (renaming to `project-context.md`) and place it in the root of your project directory.
