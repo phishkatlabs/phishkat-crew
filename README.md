@@ -1,6 +1,9 @@
 # PhishKat Crew
 
-An open-source, autonomous AI development team composed of 16 specialized Claude skills. Give the crew a goal and walk away; they will autonomously research, design, build, test, secure, document, and ship your software.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+
+**PhishKat Crew** is an open-source, autonomous AI development team composed of 16 specialized Claude skills. Give the AI crew a goal and walk away; they will autonomously research, design, build, test, secure, document, and ship your software. Fully compatible with Google Vertex AI, Antigravity CLI, Claude Code, and RooCode (Cline).
 
 ## Philosophy
 
