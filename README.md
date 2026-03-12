@@ -29,16 +29,19 @@ PhishKat Crew uses a **Hub-and-Spoke** architecture. The `project-lead` acts as 
 1. **Project Lead:** The Orchestrator
 2. **Market Researcher:** Competitor/Market Analysis
 3. **Solutions Architect:** Technical Design
-4. **UI/UX Designer:** Brand and Visual System
-5. **DBA:** Database Design and Management
-6. **Backend Dev:** Node.js API Development
-7. **Frontend Dev:** React/Vite UI Development
-8. **QA Engineer:** E2E, API, and Unit Testing
-9. **Security Expert:** Security Audits and Vulnerability Scanning
-10. **Code Reviewer:** Pattern and Quality Audits
-11. **Legal Compliance Officer:** Regulatory Compliance
-12. **DevOps:** CI/CD and Containerization
-13. **Tech Writer:** Documentation
+4. **Growth Marketer:** SEO, Copywriting, Go-to-Market Strategy
+5. **Data Analyst:** KPIs and Telemetry Engineering
+6. **UI/UX Designer:** Brand and Visual System
+7. **DBA:** Database Design and Management
+8. **Backend Dev:** Node.js API Development
+9. **Frontend Dev:** React/Vite UI Development
+10. **QA Engineer:** E2E, API, and Unit Testing
+11. **Security Expert:** Security Audits and Vulnerability Scanning
+12. **Code Reviewer:** Pattern and Quality Audits
+13. **Legal Compliance Officer:** Regulatory Compliance
+14. **DevOps:** CI/CD and Containerization
+15. **Tech Writer:** Documentation
+16. **Community Manager:** DevRel, OSS guidelines, Launch Posts
 
 ## Dependencies
 
