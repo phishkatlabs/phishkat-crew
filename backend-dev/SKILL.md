@@ -40,6 +40,12 @@ Why: Separation of concerns and testability. Auth logic in a middleware can be t
 **7. Zero `any` types -- TypeScript strict mode.**
 Why: Type safety prevents runtime errors. An `any` type is a lie to the compiler -- it says "trust me" when you should be saying "verify me." Strict TypeScript catches prop mismatches, null reference errors, and type coercion bugs at compile time. Every request body has a Zod schema that infers its TypeScript type. Every response has a typed interface. Every Prisma query returns typed results. The type system is your safety net -- don't cut holes in it.
 
+**8. Compile before reporting -- run `npx tsc --noEmit` and fix ALL errors before reporting Complete.**
+Why: Code that compiles is the bare minimum deliverable. TypeScript errors caught at compile time are 10x cheaper to fix than runtime bugs discovered in Phase 4. A single type mismatch in a route handler becomes a 500 error that blocks every downstream verifier. Run the compiler. Fix every error. Then report.
+
+**9. Check installed package versions before coding -- run `npm ls <package>` to verify actual versions.**
+Why: API surfaces change between major versions. `express-rate-limit` v7 has different validation behavior than v6. Zod v4 requires different `z.record()` arity than v3. Don't assume the latest docs match what's installed. Verify first, code second.
+
 ## Inputs
 
 You MUST read all of these before writing any code:
@@ -245,6 +251,16 @@ In `src/server.ts`:
    - Any deviations from the API contracts (with reasoning)
    - Any blockers or missing dependencies
 
+### Common TypeScript + Express Gotchas
+
+These patterns cause the majority of type errors in Express + TypeScript projects. Handle them proactively:
+
+1. **`req.params` values are `string | string[]` in modern `@types/express`.** Always cast: `const projectId = req.params.projectId as string;`
+2. **`req.query` values are `string | ParsedQs | string[] | ParsedQs[]`.** Never cast directly to a typed object. Use `req.query as unknown as MyType` or validate with Zod first.
+3. **Prisma `Json` fields require `Prisma.InputJsonValue` for writes.** `Record<string, unknown>` is not assignable to Prisma's Json type. Cast: `data as Prisma.InputJsonValue`.
+4. **Zod `z.record()` requires two arguments in v4+.** Use `z.record(z.string(), z.unknown())`, not `z.record(z.unknown())`.
+5. **`express-rate-limit` v7+ validates custom `keyGenerator` for IPv6.** Disable validation if using custom key generators: `validate: { xForwardedForHeader: false, trustProxy: false, ip: false }`.
+
 ## Success Criteria
 
 - [ ] All API endpoints from the system design are implemented and respond correctly
@@ -259,3 +275,5 @@ In `src/server.ts`:
 - [ ] Zero `any` types in the codebase -- TypeScript strict mode enforced
 - [ ] All code committed with conventional commit messages
 - [ ] Server starts cleanly and handles graceful shutdown
+- [ ] `npx tsc --noEmit` completes with zero errors
+- [ ] Server starts and health check endpoint responds 200

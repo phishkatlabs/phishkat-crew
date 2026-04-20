@@ -165,8 +165,12 @@ The UI/UX Designer goes first because the Frontend Dev needs the design system. 
       - Expected output: functional integration layer.
 
 6. **Wait** for all three agents to report Complete.
-7. **Smoke test:** Verify the health check endpoint responds, the frontend renders, and the integration layer is functional.
-8. **Run Gate Check** -- proceed to Phase 4 only if all Build gate criteria pass.
+7. **Compile check:** Before proceeding to the Build gate, verify that all code compiles and builds:
+   - Backend: run `npx tsc --noEmit` -- must report zero TypeScript errors
+   - Frontend: run `cd client && npm run build` -- must complete successfully (includes TypeScript compilation and Vite bundling)
+   - If either fails, dispatch the responsible agent with the error list to fix before proceeding. Do not accept "it works at runtime" as a substitute for clean compilation.
+8. **Smoke test:** Verify the health check endpoint responds, the frontend renders, and the integration layer is functional.
+9. **Run Gate Check** -- proceed to Phase 4 only if all Build gate criteria pass.
 
 ---
 
@@ -364,6 +368,9 @@ These are the specific checklists for each phase transition. Every box must be c
 - [ ] Integration webhooks/APIs functional (if applicable)
 - [ ] All code committed using Conventional Commits
 - [ ] Design system tokens are implemented in the frontend (not hardcoded alternatives)
+- [ ] TypeScript compilation succeeds with zero errors (`npx tsc --noEmit` for backend, `npx tsc -b` for frontend)
+- [ ] Frontend production build succeeds (`npm run build` in client directory)
+- [ ] Backend server starts and health check responds 200
 
 ### Gate: Verify --> Legal
 

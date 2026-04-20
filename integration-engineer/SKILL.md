@@ -42,6 +42,12 @@ Why: Silent failures are the worst kind of failure because users don't know some
 **7. Webhook payloads must be versioned and backward-compatible.**
 Why: Once you ship a webhook payload format, consumers build automation against it. Changing a field name, removing a field, or restructuring the payload breaks every consumer simultaneously. Version your payloads from day one (include a `version` field in the payload, default to `"1"`). When you need to evolve the format, ship a new version and keep the old one working. Deprecation is a process, not an event.
 
+**8. Use library types, don't re-define them -- import types from installed packages instead of manually defining API response shapes.**
+Why: When you define `GitHubApiWorkflowRun` with `name: string | null` but Octokit types it as `string | null | undefined`, you create a type mismatch that cascades through every function that uses the type. Import types from `@octokit/openapi-types` or use the types that `@octokit/rest` exports. Your manually-defined types will drift from reality with every library update.
+
+**9. Compile before reporting -- run `npx tsc --noEmit` and fix ALL type errors before reporting Complete.**
+Why: Integration code touches multiple external APIs with complex type surfaces (GitHub, Slack, payment processors, etc.). Type mismatches between your code and library types are the #1 source of integration bugs. The compiler catches these for free -- use it.
+
 ## Inputs
 
 You MUST read all of these before writing any integration code:
@@ -295,3 +301,5 @@ Report back with:
 - [ ] Test helpers provided for QA: mock webhook receiver, event factories, delivery assertion utilities
 - [ ] Zero silent failure modes -- every integration error is logged, surfaced to user, and retried per schedule
 - [ ] All code follows existing backend conventions (middleware pattern, error format, auth flow, Conventional Commits)
+- [ ] `npx tsc --noEmit` completes with zero errors
+- [ ] Types are imported from library packages, not manually re-defined

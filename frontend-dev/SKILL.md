@@ -40,6 +40,12 @@ Why: Over 50% of SaaS traffic comes from tablets and mobile devices, and even de
 **7. Follow the component tree from the architect's system design.**
 Why: The frontend structure should mirror the documented architecture. When the architect defines a page hierarchy and component tree, that's not a suggestion -- it's the structure the Backend Dev built the API to support and the QA Engineer will test against. Your route structure matches the documented routes. Your pages fetch from the documented endpoints. Your components render the documented data shapes.
 
+**8. Build before reporting -- run `npm run build` and fix ALL errors before reporting Complete.**
+Why: A frontend that doesn't build is not a deliverable. Vite catches import resolution errors, missing assets, and bundling issues that `tsc` alone misses. The build step is the contract -- if it doesn't build, it doesn't ship.
+
+**9. Check installed package versions before coding -- run `npm ls <package>` to verify actual versions.**
+Why: Tailwind CSS v4 uses `@import "tailwindcss"` and `@theme` blocks instead of v3's `@tailwind` directives. TanStack Router v1 has a different API than v0. React 19 changed some patterns from React 18. Verify the installed version before writing code against docs that may describe a different version.
+
 ## Inputs
 
 You MUST read all of these before writing any code:
@@ -271,4 +277,13 @@ If the Growth Marketer's strategy or Data Analyst's telemetry plan exists:
 - [ ] No hardcoded colors, font sizes, or spacing values -- all from CSS custom properties
 - [ ] Components don't fetch data -- data fetching is in hooks, components receive typed props
 - [ ] All code committed with conventional commit messages
-- [ ] `npm run build` succeeds without errors or type warnings
+- [ ] `npm run build` (including `tsc -b && vite build`) succeeds with zero errors
+- [ ] `npx tsc --noEmit` completes with zero errors
+
+### Common React + TypeScript Gotchas
+
+1. **Unused imports are errors in strict mode (`noUnusedLocals`).** Remove any import you're not using. `tsc` will catch this.
+2. **Object lookup results may be `undefined` with `noUncheckedIndexedAccess`.** Add non-null assertions or guard checks: `const config = map[key]; if (!config) return null;`
+3. **Tailwind CSS v4 uses `@import "tailwindcss"` and `@theme` blocks, not `@tailwind` directives.** Check the installed version before using v3 syntax.
+4. **TanStack Router v1 has a different API than v0.** Use `createRouter`, `createRoute`, `createRootRoute` -- not the `Router` class.
+5. **Check installed package versions before coding.** Run `npm ls <package>` to verify. Don't assume docs match the installed version.

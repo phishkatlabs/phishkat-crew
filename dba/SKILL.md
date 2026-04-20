@@ -200,6 +200,11 @@ Report back to the Project Lead with:
 - Confirmation that migrations run cleanly
 - Confirmation that seed data is populated
 
+**Important for downstream agents (Backend Dev, Integration Engineer):** Include these Prisma gotchas in your report so they don't hit runtime errors:
+- `Json` fields require `Prisma.InputJsonValue` for writes, not `Record<string, unknown>`. Import with `import type { Prisma } from '@prisma/client'` and cast: `data as Prisma.InputJsonValue`.
+- Array fields (`String[]`) require proper array syntax in queries: `{ has: "value" }` or `{ hasSome: ["a", "b"] }`.
+- Enum values in Prisma queries must match the exact enum member name (e.g., `RunStatus.PASSED`). If using string values, they must match the Prisma enum casing exactly.
+
 ## Success Criteria
 
 - [ ] All models from the architect's design are implemented in `prisma/schema.prisma`
