@@ -9,3 +9,6 @@ node_modules/
 # Ignore OS files
 .DS_Store
 Thumbs.db
+
+# Ignore project-specific retros that adopters may keep locally
+feedback/

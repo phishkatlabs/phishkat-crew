@@ -1,5 +1,9 @@
 # PhishKat Crew — Orchestration Protocol
 
+## Version
+
+v0.2 — feedback round 1 (decisions-as-files, project_type, preflight checks, mount plan, deployment runbook). Note: `required_tools:` frontmatter is declared on all 21 SKILLs in this round.
+
 ## Architecture: Hub-and-Spoke
 
 PhishKat Crew operates as a **hub-and-spoke autonomous development team**. The **Project Lead** is the sole entry point — the human director speaks only to the Project Lead, who dispatches specialized crew members through 6 sequential phases with hard gate criteria between each.
@@ -76,7 +80,7 @@ When the Project Lead dispatches a crew member:
 - Never dispatch an agent without providing full context (what's been done, what they need to do, what inputs exist)
 - Never skip an agent's required inputs — if a prerequisite document doesn't exist, that's a blocker
 - Never let two agents modify the same file simultaneously
-- Always log non-trivial decisions in `docs/decisions.md`
+- Always log non-trivial decisions as a new file under `docs/decisions/`
 
 ---
 
@@ -109,7 +113,7 @@ When the Project Lead dispatches a crew member:
 - [ ] SEO and marketing requirements defined
 - [ ] Telemetry plan with specific event names and properties
 - [ ] No [PLACEHOLDER] tags remaining in design docs
-- [ ] All architectural decisions logged in `docs/decisions.md`
+- [ ] All architectural decisions logged as files under `docs/decisions/`
 
 ---
 
@@ -203,7 +207,7 @@ When the Project Lead dispatches a crew member:
 When agents disagree (e.g., Security wants to block a feature, Backend says it's too slow):
 1. Both agents document their position with evidence
 2. Project Lead evaluates against the Design Pillars
-3. Decision is logged in `docs/decisions.md` with full reasoning
+3. Decision is logged as a new file under `docs/decisions/` with full reasoning
 4. The losing side must comply — no silent workarounds
 
 ## Escalation Protocol
@@ -220,8 +224,8 @@ Escalate to the human director when:
 ## File Conventions
 
 - **Documentation:** Markdown in `docs/` with subdirectories (research, architecture, design, marketing, analytics, legal, community)
-- **Templates:** `templates/` for reusable formats (ship-report, competitor-analysis, compliance-report, decisions, bug-report, phase-gate-checklist, feature-parity-matrix)
-- **Decision log:** `docs/decisions.md` — append-only, never delete entries
+- **Templates:** `templates/` for reusable formats (ship-report, competitor-analysis, compliance-report, decisions/, bug-report, phase-gate-checklist, feature-parity-matrix, phase-3-mount-plan, deployment)
+- **Decision log:** `docs/decisions/` — one file per decision. Decisions live one-per-file at `docs/decisions/D-NNN-<slug>.md`. Filesystem ordering is the canonical chronology. To dispatch a new decision, create a new file with the next-free `D-NNN` prefix. Run `scripts/regenerate-decisions-index.sh` to refresh `docs/decisions/INDEX.md`. This per-file model prevents the parallel-write number-collision failure mode that occurs when multiple agents append to a single shared file simultaneously. Decision files are append-only — never delete or rewrite a committed decision; supersede it with a new file instead.
 - **Code:** TypeScript strict mode, Conventional Commits, ESLint + Prettier
 - **No [PLACEHOLDER] tags** may survive a phase gate
 
