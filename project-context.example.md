@@ -7,6 +7,20 @@ This file is the single source of truth for what the crew is building. Copy this
 ## Project Name
 [Your product name]
 
+## Project Type
+[Pick exactly one. Drives which crew agents are dispatched.]
+
+- `internal-tool` — internal company tool behind SSO, finite known users. **Crew adapts:** skip Growth Marketer; reduce Legal to license audit only; reduce Community Manager to internal-repo hygiene.
+- `public-saas` — public commercial product with paid customers. **Crew adapts:** full 21-agent roster.
+- `open-source-library` — published library/CLI consumed by other developers. **Crew adapts:** emphasize Community Manager + Tech Writer; deprioritize Frontend Dev / Growth Marketer; keep Legal for license compliance.
+- `enterprise-on-prem` — customer-deployed product packaged for self-host. **Crew adapts:** emphasize Security Expert + Migration Specialist + Tech Writer (deployment runbook); full Legal scope.
+
+**Selected type (literal field — required, parsed by Project Lead at dispatch time):**
+
+```
+project_type: <pick one of: internal-tool, public-saas, open-source-library, enterprise-on-prem>
+```
+
 ## One-Line Description
 [What does this product do in one sentence?]
 

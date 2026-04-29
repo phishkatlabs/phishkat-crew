@@ -20,7 +20,7 @@
 |-------|--------|-------|
 | No [PLACEHOLDER] tags in deliverables | [ ] Pass | |
 | All documents reviewed by Project Lead | [ ] Pass | |
-| All decisions logged in docs/decisions.md | [ ] Pass | |
+| All decisions logged as files under docs/decisions/ | [ ] Pass | |
 | No blockers reported by any agent | [ ] Pass | |
 | Deliverables follow template format | [ ] Pass | |
 

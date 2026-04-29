@@ -63,4 +63,4 @@ Generated: [Date]
 
 ## Decision Log
 **Project Lead:**
-- [Summary or link to decisions.md]
+- [Summary or link to the docs/decisions/ directory]

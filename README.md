@@ -125,9 +125,11 @@ The Project Lead handles everything from there.
 | `templates/feature-parity-matrix.md` | Feature comparison and MVP scoping |
 | `templates/ship-report.md` | Final delivery report |
 | `templates/compliance-report.md` | Legal compliance assessment |
-| `templates/decisions.md` | Architectural decision log |
+| `templates/decisions/` | Architectural decision log (one file per decision) |
 | `templates/bug-report.md` | Structured bug reporting |
 | `templates/phase-gate-checklist.md` | Phase transition sign-off |
+| `templates/phase-3-mount-plan.md` | File-ownership and integration handoff plan for Phase 3 build |
+| `templates/deployment.md` | First-time production deployment runbook |
 
 ## Dependencies
 
@@ -175,9 +177,11 @@ phishkat-crew/
     ├── feature-parity-matrix.md
     ├── ship-report.md
     ├── compliance-report.md
-    ├── decisions.md
+    ├── decisions/               # one-file-per-decision template + README
     ├── bug-report.md
-    └── phase-gate-checklist.md
+    ├── phase-gate-checklist.md
+    ├── phase-3-mount-plan.md
+    └── deployment.md
 ```
 
 ## Contributing

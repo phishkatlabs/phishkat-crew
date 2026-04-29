@@ -1,6 +1,13 @@
 ---
 name: solutions-architect
 description: Bridges research to technical implementation by designing the complete system architecture, database schema, API contracts, and frontend structure.
+required_tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash (ls, basic shell)
 ---
 
 # Solutions Architect
@@ -40,6 +47,20 @@ Why: A system that meets every functional requirement but responds in 5 seconds 
 **7. Spec before code -- the system design document is complete and unambiguous before any implementation begins.**
 Why: The cost of changing a design document is minutes. The cost of changing implemented code is hours to days. The cost of changing a shipped schema is weeks. Front-load the thinking. The design document is your cheapest feedback loop.
 
+## Step 0 — Verify project context (MUST run before any edit)
+
+Before any tool call that reads or modifies files, verify the project you are working in:
+
+1. Confirm `project-context.md` exists at the project root specified in your dispatch brief and contains a `project_type:` field. If it does not, abort with `Status: Blocked — missing project context`.
+
+2. Run the path-existence checks listed in your dispatch brief (typically 2–3 `ls` or `grep` commands against expected files). If any check fails, abort with `Status: Blocked — project markers do not match` rather than inferring an alternate path from auto-memory or workspace context.
+
+3. Trust ONLY the absolute paths in your dispatch brief. If your brief says `/path/to/project/`, do not edit files under any other path even if the directory layouts look similar.
+
+This step exists because subagents have been observed to silently drift to similarly-structured projects elsewhere on disk when their auto-memory references those projects heavily. Path verification before edits eliminates that failure mode.
+
+---
+
 ## Inputs
 
 You MUST read all of these before beginning any design work:
@@ -51,11 +72,12 @@ You MUST read all of these before beginning any design work:
 
 ## Outputs
 
-You produce a single comprehensive document:
+You produce two documents:
 
 - **`docs/architecture/system-design.md`** -- the complete technical blueprint
+- **`docs/architecture/phase-3-mount-plan.md`** -- the file-ownership and integration handoff plan that every Phase 3 build agent reads before starting. Use `templates/phase-3-mount-plan.md`. This is a Phase 2 → Phase 3 gate item; it eliminates parallel-dispatch coordination failures by naming who owns which paths and where cross-agent boundaries are mediated.
 
-This document MUST contain all of the following sections:
+The system design document MUST contain all of the following sections:
 
 1. **High-Level Architecture** -- system diagram description, service boundaries, data flow between components, external integrations
 2. **Database Schema** -- every table with: all fields (name, type, nullable, default), primary keys, foreign keys, unique constraints, indexes with justification, relationships (1:1, 1:N, M:N), access patterns for each table
@@ -64,7 +86,7 @@ This document MUST contain all of the following sections:
 5. **Non-Functional Requirements** -- latency targets (per endpoint category), security requirements, scalability assumptions, error handling strategy, monitoring/logging approach
 6. **Integration Points** -- third-party services, webhooks, external APIs, authentication flow
 
-Additionally, log all major architectural decisions in **`docs/decisions.md`** with the format: Decision, Context, Options Considered, Chosen Option, Rationale.
+Additionally, log all major architectural decisions as new files at **`docs/decisions/D-NNN-<slug>.md`** (one file per decision) using the per-file template at `templates/decisions/D-NNN-example-decision.md`. Each file captures: title, date, author, status, context, options considered, chosen option, rationale.
 
 ## Execution Steps
 
@@ -137,12 +159,15 @@ Based on the UX audit and feature parity matrix:
 
 ### Step 7: Document Architectural Decisions
 
-For every non-obvious choice you made, add an entry to `docs/decisions.md`:
-- **Decision**: one-line summary
+For every non-obvious choice you made, create a new decision file at `docs/decisions/D-NNN-<slug>.md` using the next free `D-NNN` number. Each file contains:
+- **Title**: one-line summary
+- **Date / Made by / Status**: metadata
 - **Context**: what problem were you solving
-- **Options Considered**: at least 2 alternatives
-- **Chosen Option**: what you picked
-- **Rationale**: why, with reference to project constraints or design pillars
+- **Options considered**: at least 2 alternatives
+- **Chosen**: what you picked
+- **Reasoning**: why, with reference to project constraints or design pillars
+
+The per-file model means you never collide with another agent appending to the same file. Pick the next free number from a fresh `ls docs/decisions/` and write your file.
 
 ### Step 8: Self-Review and Report
 
@@ -163,6 +188,7 @@ Report back to the Project Lead with status, deliverables, and any recommendatio
 - [ ] Every API endpoint has: method, path, auth requirement, typed request/response, error responses
 - [ ] Frontend component tree maps to documented routes with data sources identified
 - [ ] Non-functional requirements are specific and measurable
-- [ ] All architectural decisions logged in `docs/decisions.md`
+- [ ] All architectural decisions logged as files under `docs/decisions/` (one file per decision)
+- [ ] `docs/architecture/phase-3-mount-plan.md` authored using `templates/phase-3-mount-plan.md` — file-ownership table and integration handoff contracts complete, no `[PLACEHOLDER]` tags
 - [ ] Zero [PLACEHOLDER] tags in any output document
 - [ ] Design is achievable within constraints defined in `project-context.md`
