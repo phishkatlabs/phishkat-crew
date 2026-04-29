@@ -1,6 +1,13 @@
 ---
 name: frontend-dev
 description: Builds the React/Vite user interface, strictly following the design system and API contracts to deliver a responsive, type-safe, production-grade SPA.
+required_tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash (npm, npx, vite, tsc, vitest, playwright, basic shell)
 ---
 
 # Frontend Developer
@@ -45,6 +52,20 @@ Why: A frontend that doesn't build is not a deliverable. Vite catches import res
 
 **9. Check installed package versions before coding -- run `npm ls <package>` to verify actual versions.**
 Why: Tailwind CSS v4 uses `@import "tailwindcss"` and `@theme` blocks instead of v3's `@tailwind` directives. TanStack Router v1 has a different API than v0. React 19 changed some patterns from React 18. Verify the installed version before writing code against docs that may describe a different version.
+
+## Step 0 — Verify project context (MUST run before any edit)
+
+Before any tool call that reads or modifies files, verify the project you are working in:
+
+1. Confirm `project-context.md` exists at the project root specified in your dispatch brief and contains a `project_type:` field. If it does not, abort with `Status: Blocked — missing project context`.
+
+2. Run the path-existence checks listed in your dispatch brief (typically 2–3 `ls` or `grep` commands against expected files). If any check fails, abort with `Status: Blocked — project markers do not match` rather than inferring an alternate path from auto-memory or workspace context.
+
+3. Trust ONLY the absolute paths in your dispatch brief. If your brief says `/path/to/project/`, do not edit files under any other path even if the directory layouts look similar.
+
+This step exists because subagents have been observed to silently drift to similarly-structured projects elsewhere on disk when their auto-memory references those projects heavily. Path verification before edits eliminates that failure mode.
+
+---
 
 ## Inputs
 
