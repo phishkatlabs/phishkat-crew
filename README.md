@@ -45,7 +45,9 @@ Dependency-ordered execution:
 2. `dba` implements the database schema (second)
 3. `backend-dev`, `frontend-dev`, and `integration-engineer` build in parallel (third)
 
-**Gate:** All endpoints responding, frontend renders, integrations functional.
+The Solutions Architect ships a `phase-3-mount-plan.md` in Phase 2 that names per-file ownership and integration contracts BEFORE Phase 3 dispatches in parallel — preventing parallel agents from picking incompatible URL shapes / file paths / contracts.
+
+**Gate:** All endpoints responding, frontend renders, integrations functional. Director has run each specialist's `VERIFICATION.md` checklist locally and reported PASS — confirms the work behaves correctly on the director's machine, not just in the agent's sandbox.
 
 ### Phase 4: Verify
 Parallel verification by `qa-engineer`, `security-expert`, `code-reviewer`, `performance-engineer`, `accessibility-auditor`, `data-analyst`, and `migration-specialist`. Issues enter the **Bug Loop** (max 3 fix attempts before human escalation).
@@ -58,9 +60,9 @@ The `legal` compliance officer evaluates regulatory requirements, generates lega
 **Gate:** Compliance report complete, legal documents generated, license audit clean.
 
 ### Phase 6: Ship
-`devops` sets up Docker and CI/CD. `tech-writer` finalizes documentation. `growth-marketer` creates launch materials. `community-manager` builds OSS infrastructure. Project Lead compiles the **Ship Report**.
+`devops` sets up Docker and CI/CD. `tech-writer` finalizes documentation (README, ARCHITECTURE, API, CHANGELOG, **DEPLOYMENT** runbook). `growth-marketer` creates launch materials. `community-manager` builds OSS infrastructure. Project Lead compiles the **Ship Report**, which includes a "Crew Runtime" section synthesized from `docs/crew-runtime-log.md` — the append-only ledger the Project Lead populated throughout the project.
 
-**Gate:** Docker builds, CI passes, docs complete, ship report delivered.
+**Gate:** Docker builds, CI passes, docs complete, director has run DevOps + Integration Engineer verification checklists, ship report delivered.
 
 ## Crew Roster (21 Agents)
 
@@ -109,6 +111,8 @@ cp .env.example .env
 
 Edit `project-context.md` with your project details — the competitor you're cloning, your tech stack, your conventions, and your MVP scope. This is the most important file; the entire crew reads it.
 
+> **Required:** set `project_type:` to one of `internal-tool`, `public-saas`, `open-source-library`, or `enterprise-on-prem`. The Project Lead reads this field at session start and adapts the roster: internal tools skip Growth Marketer and most of Legal; public SaaS uses the full 21-agent roster; OSS libraries lean on Community Manager + Tech Writer; on-prem emphasizes Security + Migration + deploy runbook. If the field is missing the Project Lead will refuse to dispatch and ask you to set it.
+
 ### 3. Launch the crew
 
 Tell the Project Lead what to build:
@@ -118,6 +122,8 @@ Tell the Project Lead what to build:
 The Project Lead handles everything from there.
 
 ## Templates
+
+### Phase deliverables
 
 | Template | Purpose |
 |----------|---------|
@@ -130,6 +136,22 @@ The Project Lead handles everything from there.
 | `templates/phase-gate-checklist.md` | Phase transition sign-off |
 | `templates/phase-3-mount-plan.md` | File-ownership and integration handoff plan for Phase 3 build |
 | `templates/deployment.md` | First-time production deployment runbook |
+
+### Project Lead rituals
+
+| Template | Purpose |
+|----------|---------|
+| `templates/dispatch-preamble.md` | Boilerplate every dispatch reuses (read SKILL, read CLAUDE.md, Step 0 verification, report-back envelope) |
+| `templates/agent-retry-brief.md` | Standard format for re-dispatching a blocked or partial agent |
+| `templates/project-context-verification.md` | Pre-Phase-1 checklist that audits external references, tech-stack claims, and scope statements |
+| `templates/crew-runtime-log.md` | Append-only ledger of every dispatch (date, phase, agent, status, duration, output) |
+
+### Agent coordination + director verification
+
+| Template | Purpose |
+|----------|---------|
+| `templates/integration-handoff.md` | Per-pair contract artifact at any agent boundary (router exports, API contracts, etc.) |
+| `templates/verification-checklist.md` | Director-runs-locally checklist that DBA, Backend Dev, Frontend Dev, DevOps, Integration Engineer, and Migration Specialist emit alongside their normal deliverables — Phase gates require director PASS |
 
 ## Dependencies
 
@@ -172,16 +194,22 @@ phishkat-crew/
 ├── devops/SKILL.md              # Phase 6
 ├── tech-writer/SKILL.md         # Phase 6
 ├── community-manager/SKILL.md   # Phase 6
-└── templates/                   # Output format templates
+└── templates/                          # Output format templates
     ├── competitor-analysis.md
     ├── feature-parity-matrix.md
     ├── ship-report.md
     ├── compliance-report.md
-    ├── decisions/               # one-file-per-decision template + README
+    ├── decisions/                      # one-file-per-decision template + README
     ├── bug-report.md
     ├── phase-gate-checklist.md
     ├── phase-3-mount-plan.md
-    └── deployment.md
+    ├── deployment.md
+    ├── dispatch-preamble.md            # boilerplate every dispatch reuses
+    ├── agent-retry-brief.md            # re-dispatch format for blocked/partial work
+    ├── integration-handoff.md          # per-pair contract artifact at agent boundaries
+    ├── project-context-verification.md # pre-Phase-1 audit checklist
+    ├── verification-checklist.md       # director-runs-locally checklist (Build/Verify/Ship specialists)
+    └── crew-runtime-log.md             # append-only ledger of every dispatch
 ```
 
 ## Contributing

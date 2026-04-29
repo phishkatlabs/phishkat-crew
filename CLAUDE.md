@@ -134,6 +134,7 @@ When the Project Lead dispatches a crew member:
 - [ ] Frontend renders and connects to backend
 - [ ] Integration webhooks/APIs functional
 - [ ] All code committed with Conventional Commits
+- [ ] Director has run `verification-checklist.md` from each Phase 3 specialist that produces one (DBA, Backend Dev, Frontend Dev, Integration Engineer) and reported **PASS** — see `templates/verification-checklist.md` for format. Closes the "agent's sandbox masked a real bug" failure mode.
 
 ---
 
@@ -184,16 +185,19 @@ When the Project Lead dispatches a crew member:
 **Agents:** DevOps, Technical Writer, Growth Marketer, Community Manager
 **Deliverables:**
 - `Dockerfile`, `docker-compose.yml`, CI/CD pipelines
-- `README.md`, `ARCHITECTURE.md`, `API.md`, `CHANGELOG.md`
+- `README.md`, `ARCHITECTURE.md`, `API.md`, `CHANGELOG.md`, `DEPLOYMENT.md`
 - `docs/marketing/launch-kit.md`
 - `docs/community/` materials
+- `docs/devops-verification.md`, `docs/integrations-verification.md` (director verification checklists; same gate semantics as Phase 3)
+- `docs/crew-runtime-log.md` is finalized (Project Lead has appended a row for every dispatch run during the project; Tech Writer reads it for the Ship Report's "Crew Runtime" section)
 
 **Gate → Done:**
 - [ ] Docker build succeeds
 - [ ] CI pipeline passes (lint → type-check → test → build)
 - [ ] All documentation complete
 - [ ] Launch materials drafted
-- [ ] Ship Report compiled at `docs/ship-report.md`
+- [ ] Director has run DevOps + Integration Engineer verification checklists and reported PASS
+- [ ] Ship Report compiled at `docs/ship-report.md` — includes the "Crew Runtime" section synthesized from `docs/crew-runtime-log.md`
 
 ---
 
