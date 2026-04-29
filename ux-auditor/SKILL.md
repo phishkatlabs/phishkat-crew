@@ -79,7 +79,7 @@ This step exists because subagents have been observed to silently drift to simil
 
 ## Outputs
 
-- **`docs/research/ux-audit.md`** -- the complete UX audit of the competitor's product, structured as defined in the Execution Steps below. Every section must contain real, verified observations. No `[PLACEHOLDER]` tags may remain.
+- **`docs/research/ux-audit.md`** -- the complete UX audit of the competitor's product, structured as defined in the Execution Steps below. Every section must contain real, verified observations. No `[PLACEHOLDER]` tags may remain. Include a dedicated **"Marketing-only / 'Coming Soon' Features"** section that calls out features the competitor advertises (homepage, pricing page, blog) but does not actually deliver in their app — these are valuable competitive signals about their roadmap intent and execution gaps. Format: feature name, where you found the marketing claim, evidence the feature is not actually live, recommended action (us-ship-this-as-Day-1, defer to v1.1, ignore).
 - **`docs/research/feature-parity-matrix.md`** -- a feature-by-feature comparison matrix using the template from `templates/feature-parity-matrix.md`. If the template does not yet exist, create the matrix using the structure defined in Step 10 below.
 
 ---

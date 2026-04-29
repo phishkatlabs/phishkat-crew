@@ -76,7 +76,7 @@ This step exists because subagents have been observed to silently drift to simil
 
 ## Outputs
 
-- **`docs/research/competitor-analysis.md`** -- the complete competitor analysis, written using the template structure from `templates/competitor-analysis.md`. Every section must be filled with real, sourced data. No `[PLACEHOLDER]` tags may remain.
+- **`docs/research/competitor-analysis.md`** -- the complete competitor analysis, written using the template structure from `templates/competitor-analysis.md`. Every section must be filled with real, sourced data. No `[PLACEHOLDER]` tags may remain. The analysis MUST include a **"Pricing & Build-vs-Buy Calculator"** subsection that computes the annual cost of staying on the competitor at the project's expected user count: `users × competitor_per_user_price × 12 months × annual_discount`. Compare against the cost of building/maintaining the same workflow in-house. Real numbers. The director uses this to anchor the build-or-buy conversation; "$X / year recurring" is a sharper argument than "their pricing is high."
 
 ---
 
