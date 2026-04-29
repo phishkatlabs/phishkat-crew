@@ -79,6 +79,7 @@ This step exists because subagents have been observed to silently drift to simil
 - Migration guide for end users (`docs/migration/import-guide.md`)
 - Dry-run and logging infrastructure
 - Import/export service code in `src/services/migration/` or equivalent location based on existing project structure
+- **`docs/migration-verification.md`** -- director verification checklist per `templates/verification-checklist.md`. The director runs locally to confirm import/export tooling round-trips against a real fixture (CSV, JSON, or competitor-API export) — exporting a known dataset and re-importing must produce the same downstream queries. Phase gate cannot advance until the director reports PASS.
 
 ## Execution Steps
 

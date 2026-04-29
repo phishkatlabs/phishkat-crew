@@ -79,6 +79,7 @@ You MUST read all of these before writing any code:
 
 - Frontend React application in the project's frontend directory
 - All code committed with **conventional commits** (e.g., `feat(ui): implement dashboard page with project grid`, `feat(auth): add login page with JWT flow`)
+- **`frontend/VERIFICATION.md`** -- director verification checklist per `templates/verification-checklist.md`. The director runs locally to confirm `npm run build` succeeds, the dev server serves at the expected port, and the golden user-flow walks cleanly through the app in a browser. Phase gate cannot advance until the director reports PASS.
 
 ## Execution Steps
 
