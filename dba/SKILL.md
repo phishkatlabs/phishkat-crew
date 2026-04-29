@@ -75,6 +75,7 @@ You MUST read all of these before writing any schema:
 - **Migrations** -- generated via `npx prisma migrate dev --name <descriptive-name>`
 - **`prisma/seed.ts`** -- seed script that populates development database with realistic test data
 - **`docs/database/TESTING.md`** -- a short note for downstream agents covering how to reset, reseed, and isolate the dev database, plus the **Local dev gotchas** section below verbatim
+- **`backend/VERIFICATION.md`** (or equivalent path under your owned tree) -- director verification checklist per `templates/verification-checklist.md`. The director runs the checklist locally to confirm migrations apply, the seed loads, and the schema is queryable on their machine. Required because the agent's sandbox often blocks the Prisma CLI; the local stack may behave differently. Phase gate cannot advance until the director reports PASS.
 
 ### Local dev gotchas
 

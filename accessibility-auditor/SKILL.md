@@ -122,7 +122,7 @@ This step exists because subagents have been observed to silently drift to simil
 
 ## Success Criteria
 
-- axe-core automated scan returns zero violations at WCAG 2.2 AA level on all pages and routes
+- axe-core automated scan returns zero violations at WCAG 2.2 AA level on all pages and routes — **the scan must have been EXECUTED LIVE against the running application, not statically reasoned about from CSS tokens or component code.** If the agent's environment cannot run Playwright + axe-core against the live stack (sandbox restrictions, missing browsers, port misalignment, etc.), the gate report MUST be `Status: Blocked` rather than "PASS conditional on later empirical run." Conditional passes have empirically masked real violations (text-on-card contrast errors hidden by token-pair-only spot-checks, focus-trap regressions invisible without keyboard-driven assertions). When Blocked, surface the specific environmental gap to the Project Lead so it can be resolved before the gate advances.
 - All interactive elements are fully keyboard accessible with logical tab order
 - All focused elements have visible focus indicators that are not obscured by sticky or fixed-position elements (SC 2.4.11)
 - All form inputs have programmatically associated labels verified by both automated scan and manual inspection

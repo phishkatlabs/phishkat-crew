@@ -89,6 +89,7 @@ You MUST read all of these before writing any integration code:
 - **Integration credential storage** -- encrypted credential management with secure retrieval
 - **Integration documentation** -- setup instructions, event catalog, payload schemas, error reference
 - **Integration test helpers** -- utilities for testing webhook delivery, mocking third-party services, and verifying event payloads
+- **`docs/integrations-verification.md`** -- director verification checklist per `templates/verification-checklist.md`. The director runs locally to confirm any CLI or third-party adapter you ship installs, authenticates, and round-trips against a real (not mocked) external service. Required because integrations are the most environment-sensitive code in the crew's output — credentials, network reachability, and webhook URLs can only be validated on the director's machine. Phase gate cannot advance until the director reports PASS.
 
 ## Execution Steps
 

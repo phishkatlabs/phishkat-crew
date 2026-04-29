@@ -80,6 +80,7 @@ You MUST read all of these before writing any code:
 
 - Backend API implementation in the project's backend directory
 - All code committed with **conventional commits** (e.g., `feat(api): add project CRUD endpoints`, `fix(auth): handle expired refresh tokens`)
+- **`backend/VERIFICATION.md`** -- director verification checklist per `templates/verification-checklist.md`. The director runs locally to confirm the server starts, `/health` returns 200, and the canonical request fixtures hit each ingest path successfully. Phase gate cannot advance until the director reports PASS.
 
 ## Execution Steps
 

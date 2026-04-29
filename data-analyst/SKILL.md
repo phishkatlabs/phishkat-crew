@@ -71,10 +71,21 @@ This step exists because subagents have been observed to silently drift to simil
 - Codebase (`src/` -- both frontend and backend source files, route handlers, React components, service layers)
 - `docs/analytics/telemetry-plan.md` -- the plan produced in Phase 2
 
+## Adapt scope to `project_type`
+
+Read `project-context.md`'s `project_type:` field at the start of every dispatch. The default execution steps below assume `public-saas`; for other types, adapt:
+
+- **`internal-tool`** — drop public/marketing analytics entirely. KPIs are 3 internal product-health metrics (e.g., weekly active engineers, work-units-ingested-per-week, quality-trend-direction). Skip funnel events and conversion tracking. Telemetry plan becomes ~12-18 events focused on feature-usage signals (which sections users visit, which features are exercised), not acquisition. PII rules say "internal-only — no external-user PII."
+- **`public-saas`** — full default scope. KPIs include both product-health and growth/conversion (trial-to-paid, cohort retention, feature adoption per plan tier). Full funnel event catalog including marketing attribution.
+- **`open-source-library`** — opt-in telemetry only. KPIs derive from package downloads (npm / PyPI / pip), GitHub stars/issues/contributors, doc-site visits. In-product telemetry is rare; if any exists it must be opt-in with a documented privacy posture.
+- **`enterprise-on-prem`** — telemetry must not phone home unless the customer opts in. KPIs come from operational metrics (deploy count, version skew across customer fleet) collected via opt-in metric uploads. EU customers may require disabling telemetry entirely; design for that.
+
+If `project_type` is missing or unrecognized, **escalate to the Project Lead** rather than guessing. The wrong assumption produces telemetry the team can't actually use.
+
 ## Outputs
 
 ### Phase 2: Design
-- `docs/analytics/telemetry-plan.md` -- complete telemetry plan with KPIs, core funnel definition, full event catalog, identity management spec, and implementation guidance
+- `docs/analytics/telemetry-plan.md` -- complete telemetry plan with KPIs, core funnel definition (where applicable per project_type), full event catalog, identity management spec, and implementation guidance
 
 ### Phase 4: Verify
 - Verification report delivered to the Project Lead -- event-by-event status (Implemented / Partially Implemented / Missing), file paths and line numbers, property verification, funnel coverage assessment, and remediation instructions for any gaps

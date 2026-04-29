@@ -76,6 +76,7 @@ This step exists because subagents have been observed to silently drift to simil
 - `nginx.conf` -- reverse proxy configuration (if the architecture requires it)
 - `.env.example` -- documented template of all required environment variables
 - `.dockerignore` -- exclude node_modules, .git, .env, and other non-essential files from the build context
+- **`docs/devops-verification.md`** -- director verification checklist per `templates/verification-checklist.md`. The director runs locally to confirm the Docker image builds, the CI pipeline passes against a representative PR, and the deploy workflow reaches the post-deploy health-check step (with rollback verified). Phase gate cannot advance until the director reports PASS.
 
 ## Execution Steps
 
