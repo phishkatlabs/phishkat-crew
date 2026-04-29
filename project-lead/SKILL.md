@@ -104,6 +104,55 @@ Before dispatching any agent, read its SKILL.md `required_tools:` frontmatter. C
 
 ---
 
+## Project context verification (run BEFORE Phase 1)
+
+After the human director hands over `project-context.md`, run through `templates/project-context-verification.md` as a structured pre-flight pass. Audits every external reference, tech-stack claim, and scope statement before any specialist agent is dispatched. Catches misnamed paths, missing assets, and unverifiable claims while corrections are cheap (a 30-second director conversation) instead of expensive (a Phase 3 redo).
+
+Do NOT dispatch Phase 1 agents if any item in the checklist is ❌ — escalate the failures to the director, wait for `project-context.md` to be corrected, re-run the checklist.
+
+---
+
+## Standard dispatch preamble (use on EVERY dispatch)
+
+Every dispatch you issue uses the boilerplate at `templates/dispatch-preamble.md`. Include it by reference when your environment supports inclusion, or paste it inline at the top of the dispatch prompt. The unique-per-dispatch text shrinks to: the task, dispatch-specific input documents, file-ownership constraints, and the report-back shape. This keeps the dispatch terse and consistent.
+
+For RE-dispatches (an agent that returned Blocked, partial, or failed verification), prepend `templates/agent-retry-brief.md` BEFORE the standard preamble. Carries forward what was tried, what failed, and what changed — the second attempt does not repeat the failure.
+
+---
+
+## Coordination artifacts at agent boundaries
+
+When two specialists' work meets at a code-or-API boundary (e.g., Backend Dev and Integration Engineer mounting routers; Frontend Dev consuming Backend Dev's API contract), the producing agent ships an `INTEGRATION_HANDOFF.md` per `templates/integration-handoff.md`. Solutions Architect's `phase-3-mount-plan.md` (D-83 in v0.2) names *which* boundaries exist; the integration-handoff template documents *what* each contract is.
+
+Project Lead enforces this at the relevant phase gate: a parallel-dispatched phase (e.g., Phase 3c with Backend Dev + Frontend Dev + Integration Engineer) cannot pass the gate unless every cross-agent boundary listed in the mount plan has a corresponding handoff document committed. Without it, parallel agents converge on incompatible contracts (the failure mode that caused PR-3 superseding).
+
+---
+
+## Director verification checklists (Phase gate prerequisite)
+
+Several specialists produce work the director must validate locally — the agent's sandbox may have lacked tools the director's machine has, or the substrate may differ in ways that hide bugs (e.g., sandboxed prisma CLI, no live GitHub App, etc.). Those agents emit a `verification-checklist.md` alongside their normal deliverables, per `templates/verification-checklist.md`.
+
+Agents that MUST emit a director verification checklist (not exhaustive — apply judgment):
+
+- **DBA** — migrations applied, seed loaded, schema queryable
+- **Backend Dev** — server starts, `/health` responds 200, ingest endpoints accept canonical fixtures
+- **Frontend Dev** — `npm run build` succeeds, dev server serves, golden flow walks cleanly in a browser
+- **Integration Engineer** — CLI installs, third-party app reachable, end-to-end ingest works
+- **DevOps** — Docker image builds, CI pipeline passes, deploy workflow reaches the health-check step
+- **Migration Specialist** — import/export tooling round-trips against a real fixture
+
+Phase gate cannot advance until the director has either run each applicable checklist and reported PASS, or explicitly waived it (and the waiver is logged as a decision).
+
+---
+
+## Crew runtime log (append after every dispatch)
+
+After each dispatch report-back lands (Complete, Blocked, Stalled, or otherwise), append one row to `<project-root>/docs/crew-runtime-log.md` per the format in `templates/crew-runtime-log.md`. Captures runtime, token usage where measurable, output size, and a one-line note. Append-only — superseded rows are referenced by later entries' Notes field, never deleted.
+
+Tech Writer reads the log in Phase 6 and produces a "Crew Runtime" section in the Ship Report (`docs/ship-report.md`). Total dispatches, total wall clock, agent-by-agent breakdown.
+
+---
+
 ## Phase 1: Research
 
 **Goal:** Understand the competitive landscape, the user's pain points, and the scope of what must be built.

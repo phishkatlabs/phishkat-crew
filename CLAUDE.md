@@ -2,7 +2,9 @@
 
 ## Version
 
-v0.2 — feedback round 1 (decisions-as-files, project_type, preflight checks, mount plan, deployment runbook). Note: `required_tools:` frontmatter is declared on all 21 SKILLs in this round.
+v0.3 — feedback round 2 (dispatch preamble, retry brief, integration handoff, project-context verification, director verification checklists, crew runtime log, agent-specific polish across 6 SKILLs).
+
+Earlier: v0.2 — feedback round 1 (decisions-as-files, project_type, preflight checks, mount plan, deployment runbook). Note: `required_tools:` frontmatter is declared on all 21 SKILLs in this round.
 
 ## Architecture: Hub-and-Spoke
 
@@ -224,7 +226,11 @@ Escalate to the human director when:
 ## File Conventions
 
 - **Documentation:** Markdown in `docs/` with subdirectories (research, architecture, design, marketing, analytics, legal, community)
-- **Templates:** `templates/` for reusable formats (ship-report, competitor-analysis, compliance-report, decisions/, bug-report, phase-gate-checklist, feature-parity-matrix, phase-3-mount-plan, deployment)
+- **Templates:** `templates/` for reusable formats:
+  - **Phase deliverables:** `ship-report.md`, `competitor-analysis.md`, `compliance-report.md`, `decisions/` (per-file decisions), `bug-report.md`, `phase-gate-checklist.md`, `feature-parity-matrix.md`, `phase-3-mount-plan.md`, `deployment.md`
+  - **Project Lead rituals (v0.3):** `dispatch-preamble.md` (boilerplate every dispatch reuses), `agent-retry-brief.md` (re-dispatch format for blocked/partial work), `project-context-verification.md` (pre-Phase-1 audit checklist), `crew-runtime-log.md` (append-only ledger of every dispatch)
+  - **Agent coordination (v0.3):** `integration-handoff.md` (per-pair contract artifact at agent boundaries)
+  - **Director verification (v0.3):** `verification-checklist.md` (director-runs-locally checklist emitted by DBA, Backend Dev, Frontend Dev, DevOps, Integration Engineer, Migration Specialist)
 - **Decision log:** `docs/decisions/` — one file per decision. Decisions live one-per-file at `docs/decisions/D-NNN-<slug>.md`. Filesystem ordering is the canonical chronology — `ls docs/decisions/` is the index. To add a new decision, create a new file with the next-free `D-NNN` prefix. This per-file model prevents the parallel-write number-collision failure mode that occurs when multiple agents append to a single shared file simultaneously. Decision files are append-only — never delete or rewrite a committed decision; supersede it with a new file instead.
 - **Code:** TypeScript strict mode, Conventional Commits, ESLint + Prettier
 - **No [PLACEHOLDER] tags** may survive a phase gate
