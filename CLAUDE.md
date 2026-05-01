@@ -2,9 +2,11 @@
 
 ## Version
 
-v0.3 — feedback round 2 (dispatch preamble, retry brief, integration handoff, project-context verification, director verification checklists, crew runtime log, agent-specific polish across 6 SKILLs).
+v0.4 — feedback round 3 (Project-Lead-runs-verification by default; inter-phase contracts: legal-pages handoff + telemetry binding + mount-plan dependency arrows; per-SKILL polish: Phase 4 `mode:` and `requires_reverify_dispatch:` frontmatter, accessibility-auditor harness reach-check, dispatch-preamble workspace-memory step; structured `Bash(<cmd>:*)` sub-permissions across 17 SKILLs).
 
-Earlier: v0.2 — feedback round 1 (decisions-as-files, project_type, preflight checks, mount plan, deployment runbook). Note: `required_tools:` frontmatter is declared on all 21 SKILLs in this round.
+Earlier:
+- v0.3 — feedback round 2 (dispatch preamble, retry brief, integration handoff, project-context verification, director verification checklists, crew runtime log, agent-specific polish across 6 SKILLs).
+- v0.2 — feedback round 1 (decisions-as-files, project_type, preflight checks, mount plan, deployment runbook). Note: `required_tools:` frontmatter is declared on all 21 SKILLs in this round.
 
 ## Architecture: Hub-and-Spoke
 
