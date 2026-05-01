@@ -10,7 +10,12 @@ required_tools:
   - Glob
   - Grep
   - WebSearch
-  - Bash (psql via docker exec, npx tsx, basic shell)
+  - Bash(psql:*)
+  - Bash(docker:*)
+  - Bash(npx:*)
+  - Bash(ls:*)
+  - Bash(echo:*)
+  - Bash(cat:*)
 ---
 
 # Data Analyst / Telemetry Engineer

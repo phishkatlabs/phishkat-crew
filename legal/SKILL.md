@@ -9,7 +9,11 @@ required_tools:
   - Grep
   - WebSearch
   - WebFetch
-  - Bash (npx license-checker, npm audit, basic shell)
+  - Bash(npx:*)
+  - Bash(npm:*)
+  - Bash(ls:*)
+  - Bash(echo:*)
+  - Bash(cat:*)
 ---
 
 # Legal Compliance Officer

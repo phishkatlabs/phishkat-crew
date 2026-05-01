@@ -9,7 +9,15 @@ required_tools:
   - Edit
   - Glob
   - Grep
-  - Bash (autocannon, k6, curl, psql via docker exec, basic shell)
+  - Bash(autocannon:*)
+  - Bash(k6:*)
+  - Bash(curl:*)
+  - Bash(psql:*)
+  - Bash(docker:*)
+  - Bash(npx:*)
+  - Bash(ls:*)
+  - Bash(echo:*)
+  - Bash(cat:*)
 ---
 
 # Performance Engineer

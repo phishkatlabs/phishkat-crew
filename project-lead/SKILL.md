@@ -7,7 +7,10 @@ required_tools:
   - Edit
   - Glob
   - Grep
-  - Bash (git, ls, basic shell)
+  - Bash(git:*)
+  - Bash(ls:*)
+  - Bash(echo:*)
+  - Bash(cat:*)
   - Task (Agent dispatch)
 ---
 

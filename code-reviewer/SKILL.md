@@ -7,7 +7,13 @@ required_tools:
   - Read
   - Glob
   - Grep
-  - Bash (eslint, tsc, basic shell — read-only review)
+  - Bash(eslint:*)
+  - Bash(tsc:*)
+  - Bash(npx:*)
+  - Bash(grep:*)
+  - Bash(ls:*)
+  - Bash(echo:*)
+  - Bash(cat:*)
 ---
 
 # Code Reviewer

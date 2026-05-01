@@ -7,7 +7,16 @@ required_tools:
   - Edit
   - Glob
   - Grep
-  - Bash (docker, gh, curl, openssl, ssh, aws, basic shell)
+  - Bash(docker:*)
+  - Bash(gh:*)
+  - Bash(curl:*)
+  - Bash(openssl:*)
+  - Bash(ssh:*)
+  - Bash(aws:*)
+  - Bash(scp:*)
+  - Bash(ls:*)
+  - Bash(echo:*)
+  - Bash(cat:*)
 ---
 
 # DevOps Engineer

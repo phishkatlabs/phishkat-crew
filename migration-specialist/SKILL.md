@@ -9,7 +9,12 @@ required_tools:
   - Edit
   - Glob
   - Grep
-  - Bash (curl, CLI tooling, basic shell)
+  - Bash(curl:*)
+  - Bash(npm:*)
+  - Bash(npx:*)
+  - Bash(ls:*)
+  - Bash(echo:*)
+  - Bash(cat:*)
 ---
 
 # Migration Specialist

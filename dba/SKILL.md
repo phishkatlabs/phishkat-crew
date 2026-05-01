@@ -7,7 +7,14 @@ required_tools:
   - Edit
   - Glob
   - Grep
-  - Bash (npm, npx, prisma, tsx, basic shell)
+  - Bash(npm:*)
+  - Bash(npx:*)
+  - Bash(prisma:*)
+  - Bash(tsx:*)
+  - Bash(psql:*)
+  - Bash(ls:*)
+  - Bash(echo:*)
+  - Bash(cat:*)
 ---
 
 # Database Administrator

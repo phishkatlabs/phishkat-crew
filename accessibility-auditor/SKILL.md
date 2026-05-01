@@ -10,7 +10,11 @@ required_tools:
   - Glob
   - Grep
   - WebFetch
-  - Bash (npx playwright, axe-core, basic shell)
+  - Bash(npx:*)
+  - Bash(playwright:*)
+  - Bash(ls:*)
+  - Bash(echo:*)
+  - Bash(cat:*)
 ---
 
 # Accessibility Auditor

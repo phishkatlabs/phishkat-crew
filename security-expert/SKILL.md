@@ -8,7 +8,12 @@ required_tools:
   - Glob
   - Grep
   - WebFetch
-  - Bash (npm audit, curl, basic shell)
+  - Bash(npm:*)
+  - Bash(curl:*)
+  - Bash(grep:*)
+  - Bash(ls:*)
+  - Bash(echo:*)
+  - Bash(cat:*)
 ---
 
 # Security Expert

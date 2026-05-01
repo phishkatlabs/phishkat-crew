@@ -8,7 +8,13 @@ required_tools:
   - Glob
   - Grep
   - WebFetch
-  - Bash (npm, npx, curl, git, basic shell)
+  - Bash(npm:*)
+  - Bash(npx:*)
+  - Bash(curl:*)
+  - Bash(git:*)
+  - Bash(ls:*)
+  - Bash(echo:*)
+  - Bash(cat:*)
 ---
 
 # Integration Engineer

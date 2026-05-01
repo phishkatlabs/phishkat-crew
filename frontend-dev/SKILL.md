@@ -7,7 +7,15 @@ required_tools:
   - Edit
   - Glob
   - Grep
-  - Bash (npm, npx, vite, tsc, vitest, playwright, basic shell)
+  - Bash(npm:*)
+  - Bash(npx:*)
+  - Bash(vite:*)
+  - Bash(tsc:*)
+  - Bash(vitest:*)
+  - Bash(playwright:*)
+  - Bash(ls:*)
+  - Bash(echo:*)
+  - Bash(cat:*)
 ---
 
 # Frontend Developer

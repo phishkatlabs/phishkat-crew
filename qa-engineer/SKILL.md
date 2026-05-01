@@ -9,7 +9,14 @@ required_tools:
   - Edit
   - Glob
   - Grep
-  - Bash (vitest, playwright, curl, supertest, coverage, basic shell)
+  - Bash(vitest:*)
+  - Bash(playwright:*)
+  - Bash(npx:*)
+  - Bash(npm:*)
+  - Bash(curl:*)
+  - Bash(ls:*)
+  - Bash(echo:*)
+  - Bash(cat:*)
 ---
 
 # QA Engineer

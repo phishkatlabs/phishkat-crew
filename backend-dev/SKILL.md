@@ -7,7 +7,15 @@ required_tools:
   - Edit
   - Glob
   - Grep
-  - Bash (npm, npx, prisma, tsc, vitest, curl, basic shell)
+  - Bash(npm:*)
+  - Bash(npx:*)
+  - Bash(prisma:*)
+  - Bash(tsc:*)
+  - Bash(vitest:*)
+  - Bash(curl:*)
+  - Bash(ls:*)
+  - Bash(echo:*)
+  - Bash(cat:*)
 ---
 
 # Backend Developer
