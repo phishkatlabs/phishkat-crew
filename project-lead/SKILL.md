@@ -182,6 +182,17 @@ When a Phase 4 verifier (`security-expert`, `accessibility-auditor`, `performanc
 - The re-dispatch reuses the original brief plus an `agent-retry-brief.md` preamble pointing at the specific fix commit/branch.
 - Standard Bug Loop retry semantics still apply (max 3 attempts then escalate).
 
+### Reading the `mode:` field on each Phase 4 SKILL (v0.4)
+
+Every Phase 4 SKILL declares a `mode:` field in frontmatter:
+
+- `mode: report` — verifier reports findings only; routes ALL fixes through the Bug Loop. Examples: `security-expert`, `code-reviewer`, `performance-engineer`, `accessibility-auditor`, `data-analyst` (Phase 4 mode).
+- `mode: report+fix` — verifier is authorized to fix specific scope directly (typically test infrastructure, harnesses, or migration tooling) AND report findings about everything else. Examples: `qa-engineer` (test infra), `migration-specialist` (importer code).
+
+Read the field at dispatch time and tailor the brief: a `report+fix` SKILL gets explicit "you may write to <these paths>; route everything else through the Bug Loop"; a `report` SKILL gets a hard "do not modify application code; report findings only."
+
+If a SKILL omits `mode:` (e.g., legacy v0.3 SKILLs not yet migrated), default to `report`. Migration is opportunistic — when you next touch a Phase 4 SKILL for any reason, add the field.
+
 ---
 
 ## Crew runtime log (append after every dispatch)

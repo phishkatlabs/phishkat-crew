@@ -1,6 +1,8 @@
 ---
 name: accessibility-auditor
-description: Dispatched by the Project Lead during Phase 4 to verify WCAG 2.2 compliance, audit keyboard navigation, screen reader compatibility, and color contrast. Uses axe-core for automated testing and manual heuristic evaluation.
+mode: report
+requires_reverify_dispatch: true
+description: Dispatched by the Project Lead during Phase 4 to verify WCAG 2.2 compliance, audit keyboard navigation, screen reader compatibility, and color contrast. Uses axe-core for automated testing and manual heuristic evaluation. Read-only against application code (reports findings; doesn't fix); may write under `__tests__/` for the a11y test harness. Re-dispatched after every Bug Loop a11y fix to re-run axe live against the affected page and confirm the violation is closed.
 required_tools:
   - Read
   - Write
@@ -88,6 +90,21 @@ This step exists because subagents have been observed to silently drift to simil
 2. **Audit the design system for contrast compliance.** Read `docs/design/design-system.md` and extract all color pairings used for text, backgrounds, borders, icons, and interactive states (hover, focus, active, disabled). Calculate contrast ratios for every pairing. Verify: normal text meets 4.5:1 (SC 1.4.3), large text (18pt or 14pt bold) meets 3:1 (SC 1.4.3), UI components and graphical objects meet 3:1 against adjacent colors (SC 1.4.11). Flag any design tokens that fail before auditing implementation -- if the design system specifies a failing color, every component using that token inherits the failure.
 
 3. **Run axe-core automated scans on every page.** Using `@axe-core/playwright`, write and execute automated accessibility tests that navigate to every route in the application and run `axe.run()`. Configure axe-core to test against WCAG 2.2 Level AA rules (use the `wcag22aa` tag set). Collect all violations, organize by impact level (critical, serious, moderate, minor), and document the element selector, WCAG criterion, and axe-core rule ID for each violation. This is the baseline -- it catches the low-hanging fruit: missing alt text, missing form labels, ARIA attribute errors, contrast failures, missing document language, duplicate IDs.
+
+   **Harness reach-check (mandatory before each scan).** Before running `axe.run()` on a route, assert `page.url()` matches the expected target. If the application's auth gate redirects unauthenticated requests to `/login` (or anywhere else), and your harness doesn't inject a session, `axe.run()` will silently scan the redirect-target page instead of the route you wanted. The scan returns "PASS" but you've audited the wrong page. This is the most common false-PASS mode for a11y test suites and it scales — every protected route in the spec gets a free pass because the harness never reached them.
+
+   The reach-check shape:
+   ```ts
+   await page.goto(route.path);
+   const got = new URL(page.url());
+   const want = route.path;
+   if (!got.pathname.startsWith(want)) {
+     throw new Error(`a11y harness did not reach ${want} — landed on ${got.pathname} instead. Check auth-gate seeding.`);
+   }
+   const results = await new AxeBuilder({ page }).analyze();
+   ```
+
+   For protected routes, the harness must inject a valid session BEFORE `page.goto()`. The recommended pattern: a `seedAuth(page)` helper that mints a synthetic JWT with the project's test secret + `iss`/`aud` claims and writes it to `localStorage` (or sets the cookie, depending on the project's auth scheme). For public routes, mark them `isPublic: true` in the route table and skip `seedAuth`. If `seedAuth` cannot run (e.g., the agent's sandbox lacks Playwright entirely), report `Status: Blocked` and surface the environmental gap.
 
 4. **Review HTML semantics and document structure.** Inspect the DOM of every page for proper semantic structure. Verify heading hierarchy: there should be exactly one `<h1>` per page, headings should not skip levels (h1 to h3 without h2), and heading text should describe the section content. Verify landmark regions: `<main>`, `<nav>`, `<header>`, `<footer>`, `<aside>` are present and correctly scoped. Verify lists are marked up as `<ul>`/`<ol>` (not divs with bullet characters). Verify data tables use `<table>`, `<th>`, and `<caption>` or `aria-label`. Verify the page has a `<title>` that uniquely identifies the page content. Verify the document `lang` attribute is set correctly.
 
