@@ -128,11 +128,11 @@ Project Lead enforces this at the relevant phase gate: a parallel-dispatched pha
 
 ---
 
-## Director verification checklists (Phase gate prerequisite)
+## Verification checklists — Project Lead runs them by default (v0.4)
 
-Several specialists produce work the director must validate locally — the agent's sandbox may have lacked tools the director's machine has, or the substrate may differ in ways that hide bugs (e.g., sandboxed prisma CLI, no live GitHub App, etc.). Those agents emit a `verification-checklist.md` alongside their normal deliverables, per `templates/verification-checklist.md`.
+Several specialists produce work that needs end-to-end verification against the director's actual environment — the agent's sandbox may have lacked tools the director's machine has, or the substrate may differ in ways that hide bugs (e.g., sandboxed prisma CLI, no live GitHub App, etc.). Those agents emit a `verification-checklist.md` alongside their normal deliverables, per `templates/verification-checklist.md`.
 
-Agents that MUST emit a director verification checklist (not exhaustive — apply judgment):
+Agents that MUST emit a verification checklist (not exhaustive — apply judgment):
 
 - **DBA** — migrations applied, seed loaded, schema queryable
 - **Backend Dev** — server starts, `/health` responds 200, ingest endpoints accept canonical fixtures
@@ -141,7 +141,46 @@ Agents that MUST emit a director verification checklist (not exhaustive — appl
 - **DevOps** — Docker image builds, CI pipeline passes, deploy workflow reaches the health-check step
 - **Migration Specialist** — import/export tooling round-trips against a real fixture
 
-Phase gate cannot advance until the director has either run each applicable checklist and reported PASS, or explicitly waived it (and the waiver is logged as a decision).
+### v0.4 execution model — you run the checklist, not the director
+
+Each step in a verification checklist now carries a `kind:` annotation:
+
+- `pl-runnable` — you (the Project Lead) execute the step directly via your Bash / Read / Grep tools, capture the output, and check it against the expected result. **This is the default if `kind:` is omitted on a step.**
+- `director-only` — the step genuinely requires director access — third-party UI clicks (creating a GitHub App, granting OAuth scopes), pasting secrets only the director has, browser visual judgment, network access the agent's sandbox lacks. You surface the step to the director with full context and an unambiguous ask.
+
+**Workflow:**
+
+1. When a producing agent reports Complete with a `verification-checklist.md`, you immediately walk the file step-by-step.
+2. For every `pl-runnable` step: execute, capture output, compare to expected. If it passes, continue. If it fails, run the "On failure" diagnostic, route the finding to the responsible Dev via the Bug Loop, then re-run after the fix.
+3. For every `director-only` step: collect them into a single batched escalation message to the director. Provide each step's context, expected outcome, and the proof you've captured for the surrounding `pl-runnable` steps so the director sees the full picture.
+4. Once every step (across both kinds) has reported PASS, advance the gate.
+
+**Why this is the default:** real v0.3 runs revealed that directors found running every checklist step the largest single friction point in an otherwise crew-driven build. Mechanical steps (`npm install`, `tsc --noEmit`, `curl /health`, simple SQL queries, `vitest run`) are exactly what the Project Lead's tool surface is good at. Director attention is finite and best spent on genuine judgment calls and director-only access, not on typing commands the crew can run faster.
+
+**When in doubt, treat a step as `director-only`.** Over-escalation costs the director a single prompt. Under-escalation (silently running a step that needs the director's eyes) hides a verification gap behind a false PASS.
+
+### Reporting back to the director after a successful verification
+
+After all steps PASS, send the director a single summary in this shape:
+
+```
+## Project Lead Verification — <deliverable name>
+**Status:** PASS
+**Steps run (pl-runnable):** N of M
+**Steps escalated (director-only):** K of M — director confirmed PASS on all
+**Notes:** <any anomalies worth flagging — usually empty>
+**Proof of execution:** <inline excerpts of the most informative command output, or pointer to a captured log>
+```
+
+If anything failed, surface the FAILURE first with a clear bug report (file, command, expected vs. observed, suspected owner agent for the Bug Loop) — do not bury bad news in the proof section.
+
+### Auto-redispatch after Bug Loop fixes (Phase 4 verifiers)
+
+When a Phase 4 verifier (`security-expert`, `accessibility-auditor`, `performance-engineer`, etc.) flags an issue and the responsible Dev fixes it via the Bug Loop, the verifier MUST be re-dispatched to confirm the fix actually closed the violation. This is structural, not optional:
+
+- A Phase 4 SKILL whose frontmatter declares `requires_reverify_dispatch: true` MUST be re-dispatched against the same scope after each Bug Loop fix.
+- The re-dispatch reuses the original brief plus an `agent-retry-brief.md` preamble pointing at the specific fix commit/branch.
+- Standard Bug Loop retry semantics still apply (max 3 attempts then escalate).
 
 ---
 

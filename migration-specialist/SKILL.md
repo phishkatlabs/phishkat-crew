@@ -79,7 +79,7 @@ This step exists because subagents have been observed to silently drift to simil
 - Migration guide for end users (`docs/migration/import-guide.md`)
 - Dry-run and logging infrastructure
 - Import/export service code in `src/services/migration/` or equivalent location based on existing project structure
-- **`docs/migration-verification.md`** -- director verification checklist per `templates/verification-checklist.md`. The director runs locally to confirm import/export tooling round-trips against a real fixture (CSV, JSON, or competitor-API export) — exporting a known dataset and re-importing must produce the same downstream queries. Phase gate cannot advance until the director reports PASS.
+- **`docs/migration-verification.md`** — verification checklist per `templates/verification-checklist.md`. Each step you author MUST declare a `kind:` annotation. `pl-runnable`: fixture-based round-trips (sample CSV/JSON in → import → query the test DB → re-export → diff), CLI install-and-help checks, mock-API integration tests, schema-mapping unit tests. `director-only`: any step that needs a real export from the director's actual competitor account (live API credentials, real customer data — fixtures cannot stand in). The Project Lead runs every `pl-runnable` step automatically and escalates only `director-only` steps. Phase gate cannot advance until every step reports PASS.
 
 ## Execution Steps
 

@@ -134,7 +134,7 @@ When the Project Lead dispatches a crew member:
 - [ ] Frontend renders and connects to backend
 - [ ] Integration webhooks/APIs functional
 - [ ] All code committed with Conventional Commits
-- [ ] Director has run `verification-checklist.md` from each Phase 3 specialist that produces one (DBA, Backend Dev, Frontend Dev, Integration Engineer) and reported **PASS** — see `templates/verification-checklist.md` for format. Closes the "agent's sandbox masked a real bug" failure mode.
+- [ ] **Project Lead has run** `verification-checklist.md` from each Phase 3 specialist that produces one (DBA, Backend Dev, Frontend Dev, Integration Engineer) — executing every `pl-runnable` step and capturing proof; escalating only `director-only` steps to the human, with the director confirming PASS on those — see `templates/verification-checklist.md` for the v0.4 execution model. Closes the "agent's sandbox masked a real bug" failure mode without burning director attention on mechanical commands.
 
 ---
 
@@ -196,7 +196,7 @@ When the Project Lead dispatches a crew member:
 - [ ] CI pipeline passes (lint → type-check → test → build)
 - [ ] All documentation complete
 - [ ] Launch materials drafted
-- [ ] Director has run DevOps + Integration Engineer verification checklists and reported PASS
+- [ ] **Project Lead has run** DevOps + Integration Engineer verification checklists (every `pl-runnable` step executed by the PL with proof captured; `director-only` steps batched to the director who has confirmed PASS) — see `templates/verification-checklist.md`
 - [ ] Ship Report compiled at `docs/ship-report.md` — includes the "Crew Runtime" section synthesized from `docs/crew-runtime-log.md`
 
 ---

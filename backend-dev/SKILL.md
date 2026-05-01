@@ -80,7 +80,7 @@ You MUST read all of these before writing any code:
 
 - Backend API implementation in the project's backend directory
 - All code committed with **conventional commits** (e.g., `feat(api): add project CRUD endpoints`, `fix(auth): handle expired refresh tokens`)
-- **`backend/VERIFICATION.md`** -- director verification checklist per `templates/verification-checklist.md`. The director runs locally to confirm the server starts, `/health` returns 200, and the canonical request fixtures hit each ingest path successfully. Phase gate cannot advance until the director reports PASS.
+- **`backend/VERIFICATION.md`** — verification checklist per `templates/verification-checklist.md`. Each step you author MUST declare a `kind:` annotation: `pl-runnable` for steps the Project Lead can execute via Bash (server boot, `/health` 200, JWT round-trip via curl, ingest-fixture POSTs, route registration spot-checks); `director-only` for steps requiring director access (e.g., pasting a real production secret to test a downstream call). The Project Lead runs every `pl-runnable` step automatically and escalates only `director-only` steps. Phase gate cannot advance until every step reports PASS.
 
 ## Execution Steps
 

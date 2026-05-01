@@ -79,7 +79,7 @@ You MUST read all of these before writing any code:
 
 - Frontend React application in the project's frontend directory
 - All code committed with **conventional commits** (e.g., `feat(ui): implement dashboard page with project grid`, `feat(auth): add login page with JWT flow`)
-- **`frontend/VERIFICATION.md`** -- director verification checklist per `templates/verification-checklist.md`. The director runs locally to confirm `npm run build` succeeds, the dev server serves at the expected port, and the golden user-flow walks cleanly through the app in a browser. Phase gate cannot advance until the director reports PASS.
+- **`frontend/VERIFICATION.md`** — verification checklist per `templates/verification-checklist.md`. Each step you author MUST declare a `kind:` annotation. `pl-runnable`: `npm install`, `npx tsc --noEmit`, `npm run build`, dev-server boot, `npx playwright test` runs (including axe-core), HTTP probes against the dev server, source-grep spot-checks. `director-only`: any browser visual judgment ("does the layout look right?"), interactive walkthroughs that need human cognition (login flow, drag-and-drop, complex form validation in real time), and any check that needs the director's actual session/cookies/credentials. The Project Lead runs every `pl-runnable` step automatically and escalates only `director-only` steps. Phase gate cannot advance until every step reports PASS.
 
 ## Execution Steps
 
