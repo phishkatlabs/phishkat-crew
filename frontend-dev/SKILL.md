@@ -268,7 +268,31 @@ Test at the breakpoints defined in the design system. Every page must be usable 
 If the Growth Marketer's strategy or Data Analyst's telemetry plan exists:
 
 1. **SEO**: set document title and meta description per page using `document.title` or a helmet library. Use semantic HTML (h1-h6, nav, main, article, section). Add structured data where relevant.
-2. **Telemetry**: implement tracking events from the telemetry plan. Page views on route change. Button clicks on key CTAs. Form submissions. Error occurrences. Use the analytics library specified in the project context (Plausible, PostHog, or custom).
+2. **Telemetry**: implement **every event from `docs/analytics/telemetry-plan.md` whose `location:` is `frontend`** — including any NEW or RENAMED events introduced by the plan. The plan is binding: shipping Phase 3 with a frontend event missing from the plan is a Phase 4 verification failure. Page views on route change. Button clicks on key CTAs. Form submissions. Error occurrences. Use the analytics library / emitter specified in the project context AND in the telemetry plan (the plan's "Implementation Guidance" section names the canonical helper to call).
+
+### Step 9.5: Scaffold the legal-pages surface (Phase 3 → Phase 5 handoff)
+
+Phase 5 (Legal) will emit four user-facing policy markdown files at fixed paths. To eliminate the GDPR Art. 12 transparency gap that otherwise surfaces between Phase 5 and Phase 6, you pre-wire the SPA's legal surface during Phase 3. This handoff is codified in `templates/legal-pages-handoff.md` — read it first.
+
+Concretely:
+
+1. **Create a `<LegalFooter />` component** mounted in the app shell (every authenticated page) AND on the public login/signup screens (so first-page-load transparency is satisfied). 4 inline links to `/privacy`, `/terms`, `/eula`, `/cookies`. Plus a `© <COMPANY_LEGAL_NAME>` line — use the literal `<COMPANY_LEGAL_NAME>` placeholder (Phase 5 Legal documents this convention; the director fills it before publish).
+2. **Visual posture:** low-emphasis text-secondary color; underlined links per WCAG SC 1.4.1 (don't rely on color alone); 24×24px touch targets per SC 2.5.8; visible focus outline.
+3. **Add 4 public routes** OUTSIDE the auth gate: `/privacy`, `/terms`, `/eula`, `/cookies`.
+4. **Create 4 page components** that import the corresponding markdown file via the build tool's raw-string import (Vite `?raw`, webpack `raw-loader`, etc.) and render with a Markdown library. Centered narrow column (~720px max-width).
+5. **Create skeletal placeholder markdown files** at the canonical fixed paths Phase 5 will fill:
+   - `docs/legal/privacy-policy.md`
+   - `docs/legal/terms-of-service.md`
+   - `docs/legal/eula.md`
+   - `docs/legal/cookie-policy.md`
+
+   Each starts with a real top-level heading + a single placeholder line so visual layout doesn't shift dramatically when Phase 5 lands real content.
+6. **Build-tool config** (if needed): for Vite, lift `server.fs.allow` to the project root so `?raw` imports of `../../docs/legal/*.md` resolve in dev.
+7. **Extend the a11y test spec** (`src/__tests__/e2e/a11y.spec.ts` or equivalent) to include the 4 new public routes as `isPublic: true`.
+
+When Phase 5 Legal lands, it overwrites the placeholder markdown content; the SPA picks up the real text on next build with zero UI changes.
+
+This step does NOT apply to projects with no UI surface (`project_type: open-source-library` typically; some `enterprise-on-prem`). The Project Lead's dispatch brief signals applicability.
 
 ### Step 10: Commit and Report
 

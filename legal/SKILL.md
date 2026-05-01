@@ -69,14 +69,21 @@ This step exists because subagents have been observed to silently drift to simil
 
 ## Outputs
 
-- `docs/legal/compliance-report.md` -- comprehensive regulatory evaluation (using `templates/compliance-report.md`)
-- `docs/legal/privacy-policy.md` -- full Privacy Policy tailored to the product
-- `docs/legal/terms-of-service.md` -- full Terms of Service
-- `docs/legal/eula.md` -- End User License Agreement
-- `docs/legal/cookie-policy.md` -- Cookie Policy (if cookies are used)
-- `docs/legal/acceptable-use-policy.md` -- Acceptable Use Policy
-- `docs/legal/dpa.md` -- Data Processing Agreement (if B2B or enterprise-facing)
-- `LICENSES.md` -- third-party dependency attribution with license types
+The four user-facing policy files have **fixed paths** because Phase 3 Frontend Dev pre-wires the SPA to import them via raw-string imports for the `/privacy`, `/terms`, `/eula`, `/cookies` routes (see `templates/legal-pages-handoff.md` for the contract). **Do NOT move or rename these four files.** Overwrite the placeholder content the Frontend Dev seeded — the SPA picks up your real text on next build with zero UI changes:
+
+- `docs/legal/privacy-policy.md` — full Privacy Policy tailored to the product **(fixed path; pre-wired by Phase 3)**
+- `docs/legal/terms-of-service.md` — full Terms of Service **(fixed path; pre-wired by Phase 3)**
+- `docs/legal/eula.md` — End User License Agreement **(fixed path; pre-wired by Phase 3)**
+- `docs/legal/cookie-policy.md` — Cookie Policy **(fixed path; pre-wired by Phase 3 unless cookies/localStorage genuinely unused)**
+
+The remaining outputs are internal/operator-facing and you own their paths fully:
+
+- `docs/legal/compliance-report.md` — comprehensive regulatory evaluation (using `templates/compliance-report.md`)
+- `docs/legal/acceptable-use-policy.md` — Acceptable Use Policy
+- `docs/legal/dpa.md` — Data Processing Agreement (if B2B or enterprise-facing)
+- `LICENSES.md` — third-party dependency attribution with license types
+
+For projects without a UI surface (typically `project_type: open-source-library`, sometimes `enterprise-on-prem`), Phase 3 won't have pre-wired the SPA routes — in that case, just emit the markdown files; the operator references them via README links or equivalent. The Project Lead's dispatch brief will signal whether the pre-wiring contract applies.
 
 ## Execution Steps
 

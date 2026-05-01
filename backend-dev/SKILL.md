@@ -227,6 +227,18 @@ Store audit logs in a dedicated `AuditLog` model (coordinate with the DBA if thi
 
 Apply audit logging to every endpoint that creates, updates, or deletes data, and to every endpoint that modifies permissions or access.
 
+### Step 6.5: Wire telemetry events from the plan (binding)
+
+If `docs/analytics/telemetry-plan.md` exists (Phase 2 Data Analyst's deliverable — present on every `public-saas` and most `internal-tool` projects), it is **binding**. Implement **every event whose `location:` is `backend`** — including any NEW or RENAMED events the plan introduces. Concretely:
+
+1. Read the plan's full event catalog. Filter to entries with `location: backend`.
+2. For each, find the trigger condition (the plan specifies file/path or condition prose) and add the emit call there.
+3. Use the canonical helper named in the plan's "Implementation Guidance" section (e.g., `emitBackendTelemetry(...)` or whatever the project standardizes on). Do NOT introduce a second emitter.
+4. Match property names + types from the plan exactly. Property drift = Phase 4 Data Analyst's verification step fails.
+5. Wire any `identify(...)` calls the plan specifies (typically on signup + login).
+
+Shipping Phase 3 with a backend event missing from the plan is a Phase 4 verification failure that loops back through the Bug Loop. Front-load the work here.
+
 ### Step 7: Implement Health Check
 
 Create a `GET /health` endpoint (no authentication required) that:
