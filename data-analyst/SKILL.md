@@ -1,6 +1,8 @@
 ---
 name: data-analyst
-description: Defines KPIs and telemetry instrumentation in Phase 2 (Design), then verifies every tracking call in the codebase during Phase 4 (Verify).
+mode: report
+requires_reverify_dispatch: true
+description: Defines KPIs and telemetry instrumentation in Phase 2 (Design), then verifies every tracking call in the codebase during Phase 4 (Verify). In Phase 4 mode, read-only against application code; reports event-implementation gaps and routes fixes to Backend/Frontend Devs through the Bug Loop. Re-dispatched after fixes land to re-grep the codebase and confirm coverage of the plan.
 required_tools:
   - Read
   - Write
@@ -8,7 +10,12 @@ required_tools:
   - Glob
   - Grep
   - WebSearch
-  - Bash (psql via docker exec, npx tsx, basic shell)
+  - Bash(psql:*)
+  - Bash(docker:*)
+  - Bash(npx:*)
+  - Bash(ls:*)
+  - Bash(echo:*)
+  - Bash(cat:*)
 ---
 
 # Data Analyst / Telemetry Engineer

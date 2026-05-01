@@ -47,7 +47,7 @@ Dependency-ordered execution:
 
 The Solutions Architect ships a `phase-3-mount-plan.md` in Phase 2 that names per-file ownership and integration contracts BEFORE Phase 3 dispatches in parallel — preventing parallel agents from picking incompatible URL shapes / file paths / contracts.
 
-**Gate:** All endpoints responding, frontend renders, integrations functional. Director has run each specialist's `VERIFICATION.md` checklist locally and reported PASS — confirms the work behaves correctly on the director's machine, not just in the agent's sandbox.
+**Gate:** All endpoints responding, frontend renders, integrations functional. The Project Lead runs each specialist's `VERIFICATION.md` checklist by default — executing every `pl-runnable` step (most: `npm install`, `tsc`, `curl /health`, etc.) and capturing proof. Only `director-only` steps (browser visual judgment, third-party UI clicks, secret pastes) are escalated to the human in a single batched ask. Confirms the work behaves correctly on the director's actual environment, not just in the agent's sandbox, while keeping the director's day relaxing.
 
 ### Phase 4: Verify
 Parallel verification by `qa-engineer`, `security-expert`, `code-reviewer`, `performance-engineer`, `accessibility-auditor`, `data-analyst`, and `migration-specialist`. Issues enter the **Bug Loop** (max 3 fix attempts before human escalation).
@@ -55,14 +55,14 @@ Parallel verification by `qa-engineer`, `security-expert`, `code-reviewer`, `per
 **Gate:** All tests passing, >80% coverage, zero critical security findings, code review approved, load test baselines established, WCAG 2.2 AA compliance verified.
 
 ### Phase 5: Legal
-The `legal` compliance officer evaluates regulatory requirements, generates legal documents, and audits third-party licenses.
+The `legal` compliance officer evaluates regulatory requirements, generates legal documents, and audits third-party licenses. Phase 3 Frontend Dev pre-wired the SPA's footer + 4 public legal-page routes during the build phase; Phase 5 just fills the markdown content (so Phase 6 starts with a launch-ready SPA, no GDPR Art. 12 transparency gap).
 
-**Gate:** Compliance report complete, legal documents generated, license audit clean.
+**Gate:** Compliance report complete, legal documents generated, license audit clean, legal pages reachable from every page (verified via the existing pre-wiring contract, no extra UI work required).
 
 ### Phase 6: Ship
 `devops` sets up Docker and CI/CD. `tech-writer` finalizes documentation (README, ARCHITECTURE, API, CHANGELOG, **DEPLOYMENT** runbook). `growth-marketer` creates launch materials. `community-manager` builds OSS infrastructure. Project Lead compiles the **Ship Report**, which includes a "Crew Runtime" section synthesized from `docs/crew-runtime-log.md` — the append-only ledger the Project Lead populated throughout the project.
 
-**Gate:** Docker builds, CI passes, docs complete, director has run DevOps + Integration Engineer verification checklists, ship report delivered.
+**Gate:** Docker builds, CI passes, docs complete, Project Lead has run DevOps + Integration Engineer verification checklists (executing every `pl-runnable` step with proof; escalating only `director-only` steps to the human), ship report delivered.
 
 ## Crew Roster (21 Agents)
 

@@ -8,7 +8,9 @@ required_tools:
   - WebSearch
   - WebFetch
   - mcp__firecrawl_* (optional)
-  - Bash (basic shell)
+  - Bash(ls:*)
+  - Bash(echo:*)
+  - Bash(cat:*)
 ---
 
 # Growth Marketer & SEO Specialist

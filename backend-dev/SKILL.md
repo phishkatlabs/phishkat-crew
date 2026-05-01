@@ -7,7 +7,15 @@ required_tools:
   - Edit
   - Glob
   - Grep
-  - Bash (npm, npx, prisma, tsc, vitest, curl, basic shell)
+  - Bash(npm:*)
+  - Bash(npx:*)
+  - Bash(prisma:*)
+  - Bash(tsc:*)
+  - Bash(vitest:*)
+  - Bash(curl:*)
+  - Bash(ls:*)
+  - Bash(echo:*)
+  - Bash(cat:*)
 ---
 
 # Backend Developer
@@ -80,7 +88,7 @@ You MUST read all of these before writing any code:
 
 - Backend API implementation in the project's backend directory
 - All code committed with **conventional commits** (e.g., `feat(api): add project CRUD endpoints`, `fix(auth): handle expired refresh tokens`)
-- **`backend/VERIFICATION.md`** -- director verification checklist per `templates/verification-checklist.md`. The director runs locally to confirm the server starts, `/health` returns 200, and the canonical request fixtures hit each ingest path successfully. Phase gate cannot advance until the director reports PASS.
+- **`backend/VERIFICATION.md`** — verification checklist per `templates/verification-checklist.md`. Each step you author MUST declare a `kind:` annotation: `pl-runnable` for steps the Project Lead can execute via Bash (server boot, `/health` 200, JWT round-trip via curl, ingest-fixture POSTs, route registration spot-checks); `director-only` for steps requiring director access (e.g., pasting a real production secret to test a downstream call). The Project Lead runs every `pl-runnable` step automatically and escalates only `director-only` steps. Phase gate cannot advance until every step reports PASS.
 
 ## Execution Steps
 
@@ -226,6 +234,18 @@ Create an audit logging utility that records:
 Store audit logs in a dedicated `AuditLog` model (coordinate with the DBA if this model isn't in the schema yet) or write to structured application logs that can be queried.
 
 Apply audit logging to every endpoint that creates, updates, or deletes data, and to every endpoint that modifies permissions or access.
+
+### Step 6.5: Wire telemetry events from the plan (binding)
+
+If `docs/analytics/telemetry-plan.md` exists (Phase 2 Data Analyst's deliverable — present on every `public-saas` and most `internal-tool` projects), it is **binding**. Implement **every event whose `location:` is `backend`** — including any NEW or RENAMED events the plan introduces. Concretely:
+
+1. Read the plan's full event catalog. Filter to entries with `location: backend`.
+2. For each, find the trigger condition (the plan specifies file/path or condition prose) and add the emit call there.
+3. Use the canonical helper named in the plan's "Implementation Guidance" section (e.g., `emitBackendTelemetry(...)` or whatever the project standardizes on). Do NOT introduce a second emitter.
+4. Match property names + types from the plan exactly. Property drift = Phase 4 Data Analyst's verification step fails.
+5. Wire any `identify(...)` calls the plan specifies (typically on signup + login).
+
+Shipping Phase 3 with a backend event missing from the plan is a Phase 4 verification failure that loops back through the Bug Loop. Front-load the work here.
 
 ### Step 7: Implement Health Check
 

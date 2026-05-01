@@ -1,13 +1,22 @@
 ---
 name: qa-engineer
-description: QA architect who enforces comprehensive test strategies across the full test pyramid, catches anti-patterns, and validates performance contracts.
+mode: report+fix
+requires_reverify_dispatch: true
+description: QA architect who enforces comprehensive test strategies across the full test pyramid, catches anti-patterns, and validates performance contracts. Authorized to fix test infrastructure (fixtures, harnesses, env wiring) directly; routes application bugs through the Bug Loop. Re-dispatched after every Bug Loop fix to confirm coverage gates still pass.
 required_tools:
   - Read
   - Write
   - Edit
   - Glob
   - Grep
-  - Bash (vitest, playwright, curl, supertest, coverage, basic shell)
+  - Bash(vitest:*)
+  - Bash(playwright:*)
+  - Bash(npx:*)
+  - Bash(npm:*)
+  - Bash(curl:*)
+  - Bash(ls:*)
+  - Bash(echo:*)
+  - Bash(cat:*)
 ---
 
 # QA Engineer
