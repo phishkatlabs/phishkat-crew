@@ -7,7 +7,10 @@ required_tools:
   - Edit
   - Glob
   - Grep
-  - Bash (ls, npm, basic shell)
+  - Bash(ls:*)
+  - Bash(npm:*)
+  - Bash(echo:*)
+  - Bash(cat:*)
 ---
 
 # Technical Writer

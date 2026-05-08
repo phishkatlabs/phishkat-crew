@@ -2,9 +2,11 @@
 
 ## Version
 
-v0.3 — feedback round 2 (dispatch preamble, retry brief, integration handoff, project-context verification, director verification checklists, crew runtime log, agent-specific polish across 6 SKILLs).
+v0.4 — feedback round 3 (Project-Lead-runs-verification by default; inter-phase contracts: legal-pages handoff + telemetry binding + mount-plan dependency arrows; per-SKILL polish: Phase 4 `mode:` and `requires_reverify_dispatch:` frontmatter, accessibility-auditor harness reach-check, dispatch-preamble workspace-memory step; structured `Bash(<cmd>:*)` sub-permissions across 17 SKILLs).
 
-Earlier: v0.2 — feedback round 1 (decisions-as-files, project_type, preflight checks, mount plan, deployment runbook). Note: `required_tools:` frontmatter is declared on all 21 SKILLs in this round.
+Earlier:
+- v0.3 — feedback round 2 (dispatch preamble, retry brief, integration handoff, project-context verification, director verification checklists, crew runtime log, agent-specific polish across 6 SKILLs).
+- v0.2 — feedback round 1 (decisions-as-files, project_type, preflight checks, mount plan, deployment runbook). Note: `required_tools:` frontmatter is declared on all 21 SKILLs in this round.
 
 ## Architecture: Hub-and-Spoke
 
@@ -134,7 +136,7 @@ When the Project Lead dispatches a crew member:
 - [ ] Frontend renders and connects to backend
 - [ ] Integration webhooks/APIs functional
 - [ ] All code committed with Conventional Commits
-- [ ] Director has run `verification-checklist.md` from each Phase 3 specialist that produces one (DBA, Backend Dev, Frontend Dev, Integration Engineer) and reported **PASS** — see `templates/verification-checklist.md` for format. Closes the "agent's sandbox masked a real bug" failure mode.
+- [ ] **Project Lead has run** `verification-checklist.md` from each Phase 3 specialist that produces one (DBA, Backend Dev, Frontend Dev, Integration Engineer) — executing every `pl-runnable` step and capturing proof; escalating only `director-only` steps to the human, with the director confirming PASS on those — see `templates/verification-checklist.md` for the v0.4 execution model. Closes the "agent's sandbox masked a real bug" failure mode without burning director attention on mechanical commands.
 
 ---
 
@@ -196,7 +198,7 @@ When the Project Lead dispatches a crew member:
 - [ ] CI pipeline passes (lint → type-check → test → build)
 - [ ] All documentation complete
 - [ ] Launch materials drafted
-- [ ] Director has run DevOps + Integration Engineer verification checklists and reported PASS
+- [ ] **Project Lead has run** DevOps + Integration Engineer verification checklists (every `pl-runnable` step executed by the PL with proof captured; `director-only` steps batched to the director who has confirmed PASS) — see `templates/verification-checklist.md`
 - [ ] Ship Report compiled at `docs/ship-report.md` — includes the "Crew Runtime" section synthesized from `docs/crew-runtime-log.md`
 
 ---
@@ -238,6 +240,7 @@ Escalate to the human director when:
 - **Decision log:** `docs/decisions/` — one file per decision. Decisions live one-per-file at `docs/decisions/D-NNN-<slug>.md`. Filesystem ordering is the canonical chronology — `ls docs/decisions/` is the index. To add a new decision, create a new file with the next-free `D-NNN` prefix. This per-file model prevents the parallel-write number-collision failure mode that occurs when multiple agents append to a single shared file simultaneously. Decision files are append-only — never delete or rewrite a committed decision; supersede it with a new file instead.
 - **Code:** TypeScript strict mode, Conventional Commits, ESLint + Prettier
 - **No [PLACEHOLDER] tags** may survive a phase gate
+- **Bash sub-permissions in SKILL frontmatter (v0.4):** each `Bash` tool an agent needs is declared as a separate `required_tools` entry in Claude Code's permission-rule format — `Bash(npm:*)`, `Bash(curl:*)`, etc. — instead of the v0.3 prose form `Bash (npm, curl, basic shell)`. Adopters can copy these entries directly into their `.claude/settings.local.json` `permissions.allow` array to grant the minimum necessary scope before dispatch. The `(*)` suffix is a wildcard for arguments. Common low-risk read-only entries (`Bash(ls:*)`, `Bash(echo:*)`, `Bash(cat:*)`) replace the v0.3 "basic shell" hand-wave.
 
 ## Current State
 

@@ -1,13 +1,23 @@
 ---
 name: performance-engineer
-description: Dispatched by the Project Lead during Phase 4 to conduct load testing, profiling, and performance optimization. Establishes baselines and identifies bottlenecks under realistic traffic patterns.
+mode: report
+requires_reverify_dispatch: true
+description: Dispatched by the Project Lead during Phase 4 to conduct load testing, profiling, and performance optimization. Establishes baselines and identifies bottlenecks under realistic traffic patterns. Read-only against application code (reports findings; doesn't fix); may write under `backend/load/` for harness/probe scripts. Re-dispatched after every NFR-violation fix (N+1 batch, index drop, caching addition) to confirm the predicted speedup actually lands and the gate-blocking p95 closes.
 required_tools:
   - Read
   - Write
   - Edit
   - Glob
   - Grep
-  - Bash (autocannon, k6, curl, psql via docker exec, basic shell)
+  - Bash(autocannon:*)
+  - Bash(k6:*)
+  - Bash(curl:*)
+  - Bash(psql:*)
+  - Bash(docker:*)
+  - Bash(npx:*)
+  - Bash(ls:*)
+  - Bash(echo:*)
+  - Bash(cat:*)
 ---
 
 # Performance Engineer

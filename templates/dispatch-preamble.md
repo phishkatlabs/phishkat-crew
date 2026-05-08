@@ -18,7 +18,8 @@ Before any tool call:
 2. `<repo-root>/CLAUDE.md` — orchestration protocol + the 5 Design Pillars (Feature Parity First → Cost-Efficient Architecture → Developer Experience → Production-Grade Quality → Rapid Iteration). Use these as tiebreakers.
 3. `<project-root>/project-context.md` — the product spec. Note especially `project_type:` (drives roster filtering), tech stack, conventions, and any director-confirmed decisions inline.
 4. `<project-root>/docs/decisions/` — every decision logged so far. **Read the directory listing; spot-read any decision whose title affects your scope.** Decisions are non-negotiable constraints; do not relitigate.
-5. **Phase-specific input documents** listed in your dispatch brief.
+5. **Workspace auto-memory (if present)** — many adopters use a per-workspace memory file (e.g., `~/.claude/projects/<workspace>/memory/MEMORY.md` or equivalent) that holds cross-session context: shared dev-environment ports, credentials patterns, project conventions, director-stated preferences. If your environment exposes such a file and the dispatch brief doesn't already inline its relevant contents, read it as part of context-loading. If the file doesn't exist or your environment doesn't surface it, skip silently — this step is opt-in and conditional. The dispatch brief still wins on conflicts.
+6. **Phase-specific input documents** listed in your dispatch brief.
 
 ### Step 2 — Verify project context (Step 0 from your SKILL)
 

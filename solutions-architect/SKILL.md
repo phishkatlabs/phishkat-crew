@@ -7,7 +7,9 @@ required_tools:
   - Edit
   - Glob
   - Grep
-  - Bash (ls, basic shell)
+  - Bash(ls:*)
+  - Bash(echo:*)
+  - Bash(cat:*)
 ---
 
 # Solutions Architect

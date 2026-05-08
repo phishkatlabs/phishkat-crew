@@ -1,13 +1,20 @@
 ---
 name: migration-specialist
-description: Designs and builds data import/export tooling so users can migrate from competitor products seamlessly, with zero data loss and full auditability.
+mode: report+fix
+requires_reverify_dispatch: false
+description: Designs and builds data import/export tooling so users can migrate from competitor products seamlessly, with zero data loss and full auditability. Authorized to ship the import tooling itself (CLI command, service layer, fixture round-trip test) when v1 scope permits, OR to scope-and-defer to v2 with a written plan + decision file when constraints push past the v1 timebox.
 required_tools:
   - Read
   - Write
   - Edit
   - Glob
   - Grep
-  - Bash (curl, CLI tooling, basic shell)
+  - Bash(curl:*)
+  - Bash(npm:*)
+  - Bash(npx:*)
+  - Bash(ls:*)
+  - Bash(echo:*)
+  - Bash(cat:*)
 ---
 
 # Migration Specialist
@@ -79,7 +86,7 @@ This step exists because subagents have been observed to silently drift to simil
 - Migration guide for end users (`docs/migration/import-guide.md`)
 - Dry-run and logging infrastructure
 - Import/export service code in `src/services/migration/` or equivalent location based on existing project structure
-- **`docs/migration-verification.md`** -- director verification checklist per `templates/verification-checklist.md`. The director runs locally to confirm import/export tooling round-trips against a real fixture (CSV, JSON, or competitor-API export) — exporting a known dataset and re-importing must produce the same downstream queries. Phase gate cannot advance until the director reports PASS.
+- **`docs/migration-verification.md`** — verification checklist per `templates/verification-checklist.md`. Each step you author MUST declare a `kind:` annotation. `pl-runnable`: fixture-based round-trips (sample CSV/JSON in → import → query the test DB → re-export → diff), CLI install-and-help checks, mock-API integration tests, schema-mapping unit tests. `director-only`: any step that needs a real export from the director's actual competitor account (live API credentials, real customer data — fixtures cannot stand in). The Project Lead runs every `pl-runnable` step automatically and escalates only `director-only` steps. Phase gate cannot advance until every step reports PASS.
 
 ## Execution Steps
 
